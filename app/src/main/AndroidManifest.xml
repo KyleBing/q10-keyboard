@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_rounded"
         android:supportsRtl="true"
         android:theme="@style/Theme.Demo_activity"
-        tools:targetApi="30">
+        tools:targetApi="s">
         <activity
             android:name=".MainActivity"
             android:exported="true">
