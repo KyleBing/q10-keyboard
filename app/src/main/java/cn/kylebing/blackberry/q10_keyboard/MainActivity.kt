@@ -1,17 +1,32 @@
 package cn.kylebing.blackberry.q10_keyboard
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.home)
 
+        // BLUETOOTH State
+        val bluetoothAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)
+        val bluetoothLEAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
+
+        setContentView(R.layout.blue_tooth_feathers)
+
+        val textViewBluetooth = findViewById<TextView>(R.id.textViewBlueTooth)
+        textViewBluetooth.text = "蓝牙：$bluetoothAvailable"
+
+        val textViewBluetoothLow = findViewById<TextView>(R.id.textViewBlueToothLE)
+        textViewBluetoothLow.text = "低功耗蓝牙：$bluetoothLEAvailable"
+
+
+/*
 
         // LIST VIEW
         val deviceStringArray = arrayOf(
@@ -37,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             }
         listView.onItemClickListener = messageClickedHandler
 
+*/
 
         /*
         // button click event

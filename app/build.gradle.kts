@@ -11,8 +11,8 @@ android {
         applicationId = "cn.kylebing.blackberry.q10_keyboard"
         minSdk = 18
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 4
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
