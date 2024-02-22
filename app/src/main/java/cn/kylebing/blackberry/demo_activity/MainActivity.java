@@ -18,7 +18,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         // LIST VIEW
-        final String[] deviceStringArray = {"BlackBerryQ10", "MacbookPro 14", "Windows(Win10)"};
+        final String[] deviceStringArray = {
+                "BlackBerry Q10",
+                "Macbook Pro 14",
+                "Windows (Win10)",
+                "BlackBerry 9900",
+                "BlackBerry 9800",
+                "iPhone 15 Pro"
+        };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_cell, R.id.list_cell, deviceStringArray);
 
         ListView listView = findViewById(R.id.listView);
