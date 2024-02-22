@@ -22,18 +22,16 @@ class MainActivity : AppCompatActivity() {
             "BlackBerry 9800",
             "iPhone 15 Pro"
         )
-        val adapter = ArrayAdapter(this, R.layout.list_cell, R.id.list_cell, deviceStringArray)
+        val adapter = ArrayAdapter(this, R.layout.list_cell, R.id.list_cell_text_view, deviceStringArray)
         val listView = findViewById<ListView>(R.id.listView)
         listView.adapter = adapter
 
-        // Handle Click
+        // Handle ListView Click
         val messageClickedHandler =
-            OnItemClickListener { parent, view, position, id ->
+            OnItemClickListener { _, view, position, id ->
                 Toast.makeText(
-                    view.context, String.format(
-                        "position: %d, id: %d\n你选择了 %s", position, id,
-                        deviceStringArray[position]
-                    ),
+                    view.context,
+                    "position: $position, id: $id\n你选择了 $deviceStringArray[position]",
                     Toast.LENGTH_SHORT
                 ).show()
             }
