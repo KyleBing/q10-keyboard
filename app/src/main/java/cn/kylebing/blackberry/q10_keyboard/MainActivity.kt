@@ -1,14 +1,18 @@
 package cn.kylebing.blackberry.q10_keyboard
 
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -30,6 +34,10 @@ class MainActivity : AppCompatActivity() {
 
         refreshBlueToothInfo() // 刷新蓝牙信息
 
+        /**
+         * 按钮事件
+         */
+
         // bluetooth on
         findViewById<Button>(R.id.button_turn_on_bluetooth)
             .setOnClickListener {
@@ -47,7 +55,56 @@ class MainActivity : AppCompatActivity() {
             .setOnClickListener {
                 setBluetoothCanBeFound()
             }
+
+        // bluetooth receive
+        findViewById<Button>(R.id.button_receive_connection)
+            .setOnClickListener {
+                receiveBTDeviceConnection()
+            }
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Don't forget to unregister the ACTION_FOUND receiver.
+        unregisterReceiver(receiver)
+    }
+
+
+    /**
+     * 查找附近蓝牙设备
+     */
+
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    // 创建一个广播接收器： ACTION_FOUND
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val textViewOther: TextView = findViewById<TextView>(R.id.textViewOther)
+            when (intent.action) {
+                BluetoothDevice.ACTION_FOUND -> {
+                    // Discovery has found a device. Get the BluetoothDevice
+                    // object and its info from the Intent.
+                    val device: BluetoothDevice? =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                    val deviceName = device?.name
+                    val deviceHardwareAddress = device?.address // MAC address
+                    textViewOther.text = "${textViewOther.text}\n新设备名: ${deviceName}, 地址: ${deviceHardwareAddress}"
+                }
+            }
+        }
+    }
+
+    private fun receiveBTDeviceConnection(){
+        // Register for broadcasts when a device is discovered.
+        // 发现设备后创建一个接收器
+        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        registerReceiver(receiver, filter)
+        Toast
+            .makeText(applicationContext, "已开启接收附近蓝牙设备的连接", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+
 
     /**
      * 设置蓝牙可被发现
@@ -59,6 +116,9 @@ class MainActivity : AppCompatActivity() {
                 putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100)
             }
         startActivityForResult(discoverableIntent, requestCode)
+        Toast
+            .makeText(applicationContext, "已开启可被发现", Toast.LENGTH_SHORT)
+            .show()
     }
 
     /**
@@ -89,12 +149,15 @@ class MainActivity : AppCompatActivity() {
                 textViewOther.text = "配对的蓝牙设备数量为 ${mBtAdapter.bondedDevices.size}"
                 var deviceSetString = ""
                 mBtAdapter.bondedDevices.forEach { device ->
-                    deviceSetString = deviceSetString + device.toString() + ","
+                    deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
                 textViewOther.text =
-                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n 设备信息为：$deviceSetString"
+                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
             }
         }
+        Toast
+            .makeText(applicationContext, "已开启蓝牙", Toast.LENGTH_SHORT)
+            .show()
     }
 
     /**
@@ -116,5 +179,8 @@ class MainActivity : AppCompatActivity() {
                     "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
             }
         }
+        Toast
+            .makeText(applicationContext, "已刷新", Toast.LENGTH_SHORT)
+            .show()
     }
 }
