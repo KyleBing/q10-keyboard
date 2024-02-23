@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                         textViewOther.text = "${p0/1000}s 后刷新蓝牙列表"
                     }
                     override fun onFinish() {
+                        textViewOther.text = "正在刷新蓝牙列表..."
                         refreshBlueToothInfo()
                     }
                 }.start()
@@ -109,10 +110,10 @@ class MainActivity : AppCompatActivity() {
             if (mBtAdapter.isEnabled) {
                 var deviceSetString = ""
                 mBtAdapter.bondedDevices.forEach { device ->
-                    deviceSetString = deviceSetString + device.toString() + ","
+                    deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
                 textViewOther.text =
-                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n 设备信息为：$deviceSetString"
+                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
             }
         }
     }

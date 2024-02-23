@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:background="@color/black"
         android:layout_width="match_parent"
@@ -37,60 +38,63 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewBlueTooth"
-                android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="蓝牙权限"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/textViewBlueToothLE"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="低功耗蓝牙权限"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewBlueTooth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="蓝牙权限"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/textViewOther"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="---"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                <TextView
+                    android:id="@+id/textViewBlueToothLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="低功耗蓝牙权限"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewOther"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="---"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </ScrollView>
+
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             >
             <Button
                 android:id="@+id/button_turn_on_bluetooth"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开启蓝牙" />
             <Button
                 android:id="@+id/button_refresh"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="刷新" />
+                android:text="刷新蓝牙" />
             <Button
                 android:id="@+id/button_be_found"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设置可被发现" />
+                android:text="可被发现" />
 
         </LinearLayout>
 
