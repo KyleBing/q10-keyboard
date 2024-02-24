@@ -215,12 +215,8 @@ class MainActivity : AppCompatActivity() {
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             if (mBtAdapter.isEnabled) {
-                var deviceSetString = ""
-                mBtAdapter.bondedDevices.forEach { device ->
-                    deviceSetString = deviceSetString + device.toString() + ",\n"
-                }
                 textViewDeviceCount.text = "数量:${mBtAdapter.bondedDevices.size}"
-                textViewInfo.text = "设备信息为：\n$deviceSetString"
+                textViewInfo.text = "已配对设备为：\n${mBtAdapter.bondedDevices.joinToString(",\n")}"
             }
         }
         Toast
