@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     /**
      * 添加按钮事件
      */
@@ -156,6 +155,12 @@ class MainActivity : AppCompatActivity() {
      * 设置蓝牙可被发现
      */
     private fun setBluetoothCanBeFound() {
+        val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+        val mBtAdapter = mBluetoothManager.adapter
+        // 取消蓝牙搜索操作
+        if (mBtAdapter.state.equals(BluetoothAdapter.STATE_ON)){
+            mBtAdapter.cancelDiscovery()
+        }
         val requestCode = 1;
         val discoverableIntent: Intent =
             Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
@@ -214,7 +219,11 @@ class MainActivity : AppCompatActivity() {
         val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_count)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
-            if (mBtAdapter.isEnabled) {
+            // 取消蓝牙搜索操作
+            if (mBtAdapter.state.equals(BluetoothAdapter.STATE_ON)){
+                mBtAdapter.cancelDiscovery()
+            }
+            if (mBtAdapter.isEnabled){
                 textViewDeviceCount.text = "数量:${mBtAdapter.bondedDevices.size}"
                 textViewInfo.text = "已配对设备为：\n${mBtAdapter.bondedDevices.joinToString(",\n")}"
             }
@@ -238,8 +247,8 @@ class MainActivity : AppCompatActivity() {
         var deviceType = ""
         when (device.type){
             BluetoothDevice.DEVICE_TYPE_CLASSIC -> deviceType = "常规"
-            BluetoothDevice.DEVICE_TYPE_DUAL -> deviceType = "多模"
-            BluetoothDevice.DEVICE_TYPE_LE -> deviceType = "低功"
+            BluetoothDevice.DEVICE_TYPE_DUAL -> deviceType = "全段"
+            BluetoothDevice.DEVICE_TYPE_LE -> deviceType = "低耗"
             BluetoothDevice.DEVICE_TYPE_UNKNOWN -> deviceType = "不明"
         }
         return "$deviceHardwareAddress $deviceType $deviceName"
