@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:background="@color/black"
         android:layout_width="match_parent"
@@ -16,28 +15,37 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_gravity="bottom"
                 android:layout_marginEnd="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@mipmap/ic_launcher">
-
             </ImageView>
             <TextView
+                android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:text="蓝牙权限情况"
-                android:textSize="30dp"
-                android:textFontWeight="800"
-                android:textAlignment="center"
+                android:text="蓝牙权限状态"
+                android:textSize="24dp"
+                android:textFontWeight="600"
+                />
+            <TextView
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gary"
+                android:text="@string/version"
+                android:textSize="16dp"
                 />
         </LinearLayout>
 
         <LinearLayout
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal">
@@ -45,8 +53,7 @@
                 android:id="@+id/textViewBlueTooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:text="蓝牙权限"
+                android:text="蓝牙:有"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
             <TextView
@@ -54,7 +61,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:text="低功耗蓝牙权限"
+                android:text="低功耗蓝牙:有"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/text_view_device_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="数量:3个"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
         </LinearLayout>
@@ -65,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_marginBottom="5dp"
             android:padding="5dp"
-            android:layout_height="150dp">
+            android:layout_height="170dp">
             <TextView
                 android:id="@+id/text_view_info"
                 android:layout_width="match_parent"

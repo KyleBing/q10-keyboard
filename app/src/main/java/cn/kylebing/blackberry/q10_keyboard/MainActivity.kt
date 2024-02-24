@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
             packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
 
         val textViewBluetooth = findViewById<TextView>(R.id.textViewBlueTooth)
-        textViewBluetooth.text = "蓝牙：$bluetoothAvailable"
+        textViewBluetooth.text = if (bluetoothAvailable) "蓝牙:有" else "蓝牙:无"
 
         val textViewBluetoothLow = findViewById<TextView>(R.id.textViewBlueToothLE)
-        textViewBluetoothLow.text = "低功耗蓝牙：$bluetoothLEAvailable"
+        textViewBluetoothLow.text = if (bluetoothAvailable) "低功耗蓝牙:有" else "低功耗蓝牙:无"
 
         refreshBlueToothInfo() // 刷新蓝牙信息
 
@@ -139,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
+        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_count)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
 
@@ -157,13 +158,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.start()
             } else {
-                textViewInfo.text = "配对的蓝牙设备数量为 ${mBtAdapter.bondedDevices.size}"
+                textViewDeviceCount.text = "数量：${mBtAdapter.bondedDevices.size}"
                 var deviceSetString = ""
                 mBtAdapter.bondedDevices.forEach { device ->
                     deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
-                textViewInfo.text =
-                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
+                textViewInfo.text = "设备信息为：\n$deviceSetString"
             }
         }
         Toast
@@ -179,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
+        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_count)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             if (mBtAdapter.isEnabled) {
@@ -186,8 +187,8 @@ class MainActivity : AppCompatActivity() {
                 mBtAdapter.bondedDevices.forEach { device ->
                     deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
-                textViewInfo.text =
-                    "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
+                textViewDeviceCount.text = "数量： ${mBtAdapter.bondedDevices.size}"
+                textViewInfo.text = "设备信息为：\n$deviceSetString"
             }
         }
         Toast
