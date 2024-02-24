@@ -72,6 +72,14 @@ class MainActivity : AppCompatActivity() {
             .setOnClickListener {
                 startSearchBluetoothDevice()
             }
+
+        // 蓝牙查找 - 取消
+        findViewById<Button>(R.id.button_search_cancel)
+            .setOnClickListener {
+                val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+                mBluetoothManager.adapter.cancelDiscovery()
+                Toast.makeText(applicationContext, "取消查找操作", Toast.LENGTH_SHORT).show()
+            }
     }
 
 
@@ -158,9 +166,7 @@ class MainActivity : AppCompatActivity() {
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val mBtAdapter = mBluetoothManager.adapter
         // 取消蓝牙搜索操作
-        if (mBtAdapter.state.equals(BluetoothAdapter.STATE_ON)){
-            mBtAdapter.cancelDiscovery()
-        }
+        mBtAdapter.cancelDiscovery() // 除 STATE_ON 之外的状态，操作该操作都会返回 false
         val requestCode = 1;
         val discoverableIntent: Intent =
             Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
@@ -220,9 +226,7 @@ class MainActivity : AppCompatActivity() {
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             // 取消蓝牙搜索操作
-            if (mBtAdapter.state.equals(BluetoothAdapter.STATE_ON)){
-                mBtAdapter.cancelDiscovery()
-            }
+            mBtAdapter.cancelDiscovery() // 除 STATE_ON 之外的状态，操作该操作都会返回 false
             if (mBtAdapter.isEnabled){
                 textViewDeviceCount.text = "数量:${mBtAdapter.bondedDevices.size}"
                 textViewInfo.text = "已配对设备为：\n${mBtAdapter.bondedDevices.joinToString(",\n")}"
