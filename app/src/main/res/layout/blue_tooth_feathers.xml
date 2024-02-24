@@ -50,18 +50,18 @@
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/textViewBlueTooth"
+                android:id="@+id/textview_bluetooth_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="蓝牙:有"
+                android:text="蓝牙:无"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
             <TextView
-                android:id="@+id/textViewBlueToothLE"
+                android:id="@+id/textview_bluetooth_capable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:text="低功耗蓝牙:有"
+                android:text="支持:无"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:text="数量:3个"
+                android:text="数量:-"
                 android:textColor="@color/white"
                 android:textSize="18dp" />
         </LinearLayout>
@@ -82,12 +82,13 @@
             android:padding="5dp"
             android:layout_height="170dp">
             <TextView
+                android:fontFamily="@font/jetbrainsmono_regular"
                 android:id="@+id/text_view_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="---"
+                android:text="JD:EW:34:DK:OE"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
         </ScrollView>
 
         <LinearLayout
@@ -118,17 +119,17 @@
             android:layout_height="40dp"
             >
             <Button
-                android:id="@+id/button_receive_connection"
+                android:id="@+id/button_search_device"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="接收连接" />
+                android:text="搜索设备" />
             <Button
                 android:id="@+id/button_be_found"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="可被别人发现" />
+                android:text="可被发现" />
 
         </LinearLayout>
 
