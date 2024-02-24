@@ -67,7 +67,7 @@
             android:padding="5dp"
             android:layout_height="150dp">
             <TextView
-                android:id="@+id/textViewOther"
+                android:id="@+id/text_view_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="---"

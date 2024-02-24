@@ -72,14 +72,14 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * 查找附近蓝牙设备
+     * 开始发现设备
      */
 
     // Create a BroadcastReceiver for ACTION_FOUND.
     // 创建一个广播接收器： ACTION_FOUND
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val textViewOther: TextView = findViewById<TextView>(R.id.textViewOther)
+            val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
             when (intent.action) {
                 BluetoothDevice.ACTION_FOUND -> {
                     // Discovery has found a device. Get the BluetoothDevice
@@ -88,20 +88,30 @@ class MainActivity : AppCompatActivity() {
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     val deviceName = device?.name
                     val deviceHardwareAddress = device?.address // MAC address
-                    textViewOther.text = "${textViewOther.text}\n新设备名: ${deviceName}, 地址: ${deviceHardwareAddress}"
+                    textViewInfo.text = "${textViewInfo.text}\n新设备名: ${deviceName}, 地址: ${deviceHardwareAddress}"
                 }
             }
         }
     }
 
     private fun receiveBTDeviceConnection(){
-        // Register for broadcasts when a device is discovered.
-        // 发现设备后创建一个接收器
-        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        registerReceiver(receiver, filter)
-        Toast
-            .makeText(applicationContext, "已开启接收附近蓝牙设备的连接", Toast.LENGTH_SHORT)
-            .show()
+        // blue tooth
+        val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+        val mBtAdapter = mBluetoothManager.adapter
+        if (mBtAdapter != null) {
+
+            // 发现设备后创建一个接收器
+            val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+            registerReceiver(receiver, filter)
+
+            // 开始扫描
+            if (mBtAdapter.startDiscovery()){
+                Toast
+                    .makeText(applicationContext, "开始发现设备", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
     }
 
 
@@ -116,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 100)
             }
         startActivityForResult(discoverableIntent, requestCode)
+
         Toast
             .makeText(applicationContext, "已开启可被发现", Toast.LENGTH_SHORT)
             .show()
@@ -127,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     private fun openBluetooth() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-        val textViewOther: TextView = findViewById<TextView>(R.id.textViewOther)
+        val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
 
@@ -135,23 +146,23 @@ class MainActivity : AppCompatActivity() {
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 val REQUEST_ENABLE_BT = 1 // 请求码，将会在结果中返回请求码
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-                textViewOther.text = "蓝牙未开启，已请求开启"
+                textViewInfo.text = "蓝牙未开启，已请求开启"
                 object : CountDownTimer(3000,1000){
                     override fun onTick(p0: Long) {
-                        textViewOther.text = "${p0/1000}s 后刷新蓝牙列表"
+                        textViewInfo.text = "${p0/1000}s 后刷新蓝牙列表"
                     }
                     override fun onFinish() {
-                        textViewOther.text = "正在刷新蓝牙列表..."
+                        textViewInfo.text = "正在刷新蓝牙列表..."
                         refreshBlueToothInfo()
                     }
                 }.start()
             } else {
-                textViewOther.text = "配对的蓝牙设备数量为 ${mBtAdapter.bondedDevices.size}"
+                textViewInfo.text = "配对的蓝牙设备数量为 ${mBtAdapter.bondedDevices.size}"
                 var deviceSetString = ""
                 mBtAdapter.bondedDevices.forEach { device ->
                     deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
-                textViewOther.text =
+                textViewInfo.text =
                     "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
             }
         }
@@ -167,7 +178,7 @@ class MainActivity : AppCompatActivity() {
     private fun refreshBlueToothInfo() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-        val textViewOther: TextView = findViewById<TextView>(R.id.textViewOther)
+        val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             if (mBtAdapter.isEnabled) {
@@ -175,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                 mBtAdapter.bondedDevices.forEach { device ->
                     deviceSetString = deviceSetString + device.toString() + ",\n"
                 }
-                textViewOther.text =
+                textViewInfo.text =
                     "配对的蓝牙设备数量为：${mBtAdapter.bondedDevices.size}个\n设备信息为：\n$deviceSetString"
             }
         }

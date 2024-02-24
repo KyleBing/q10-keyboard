@@ -4,11 +4,13 @@
     tools:ignore="CoarseFineLocation">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />  <!--蓝牙管理-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!--蓝牙连接-->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />  <!--蓝牙扫描-->
 
-    <!-- If your app targets Android 9 or lower, you can declare
-     ACCESS_COARSE_LOCATION instead. -->
+
+    <!-- If your app targets Android 9 or lower, you can declare ACCESS_COARSE_LOCATION instead. -->
+    <!-- 需要这个权限，不然 app 安装失败 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:ignore="CoarseFineLocation" />
 
