@@ -17,11 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
+
     var deviceIndex = 1 // 发现设备的序号
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.blue_tooth_feathers)
+        setContentView(R.layout.bluetooth_info_panel)
 
         // 蓝牙功能展示
         val bluetoothAbility = mutableListOf<String>()
