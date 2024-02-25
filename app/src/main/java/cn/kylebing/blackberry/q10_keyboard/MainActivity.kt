@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.KeyEvent
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -82,13 +83,16 @@ class MainActivity : AppCompatActivity() {
         // 蓝牙搜索 - 取消
         findViewById<Button>(R.id.button_search_cancel)
             .setOnClickListener {
-                val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-                mBluetoothManager.adapter.cancelDiscovery()
-                findViewById<TextView>(R.id.text_view_info).text = "已取消搜索操作"
-                Toast.makeText(applicationContext, "取消搜索操作", Toast.LENGTH_SHORT).show()
+                cancelBluetoothSearch()
             }
     }
 
+    private fun cancelBluetoothSearch(){
+        val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
+        mBluetoothManager.adapter.cancelDiscovery()
+        findViewById<TextView>(R.id.text_view_info).text = "已取消搜索操作"
+        Toast.makeText(applicationContext, "取消搜索操作", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -261,5 +265,44 @@ class MainActivity : AppCompatActivity() {
 
         // 更新蓝牙状态
         getBluetoothState()
+    }
+
+    /**
+     * 按键响应
+     */
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_R -> {
+                refreshBluetoothDeviceList()
+                true
+            }
+            KeyEvent.KEYCODE_O -> {
+                openBluetooth()
+                true
+            }
+            KeyEvent.KEYCODE_SPACE -> {
+                startSearchBluetoothDevice()
+                true
+            }
+            KeyEvent.KEYCODE_C -> {
+                cancelBluetoothSearch()
+                true
+            }
+            KeyEvent.KEYCODE_F -> {
+                setBluetoothCanBeFound()
+                true
+            }
+            KeyEvent.KEYCODE_T -> {
+                val recyclerView =  findViewById<RecyclerView>(R.id.recyclerview)
+                recyclerView.layoutManager!!.smoothScrollToPosition(recyclerView, RecyclerView.State(), 0)
+                true
+            }
+            KeyEvent.KEYCODE_B -> {
+                val recyclerView =  findViewById<RecyclerView>(R.id.recyclerview)
+                recyclerView.layoutManager!!.smoothScrollToPosition(recyclerView, RecyclerView.State(), 10000)
+                true
+            }
+            else -> super.onKeyUp(keyCode, event)
+        }
     }
 }
