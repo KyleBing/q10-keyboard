@@ -3,147 +3,172 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
     <LinearLayout
-        android:background="@color/black"
+        android:id="@+id/linearLayout_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:padding="5dp">
+
             <ImageView
-                android:layout_gravity="bottom"
-                android:layout_marginEnd="10dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@mipmap/ic_launcher_with_border">
-            </ImageView>
-            <TextView
                 android:layout_gravity="bottom"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="BlackBerry Logo"
+                android:src="@mipmap/ic_launcher_with_border" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/jetbrainsmono_bold"
                 android:text="蓝牙权限状态"
-                android:textSize="24dp"
-                android:textFontWeight="600"
-                />
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
             <TextView
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gary"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/jetbrainsmono_regular"
                 android:text="@string/version"
-                android:textSize="16dp"
-                />
+                android:textColor="@color/gary"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
             <TextView
                 android:id="@+id/textview_bluetooth_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="蓝牙:无"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/textview_bluetooth_capable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:text="支持:无"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/text_view_device_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:text="数量:-"
                 android:textColor="@color/white"
-                android:textSize="18dp" />
+                android:textSize="15sp" />
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/bgContent"
+            android:padding="5dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/recyclerview_cell" />
+
         <ScrollView
-            android:background="#111"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_marginBottom="5dp"
-            android:padding="5dp"
-            android:layout_height="50dp">
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/bgContent"
+            android:padding="3dp">
+
             <TextView
-                android:fontFamily="@font/jetbrainsmono_regular"
                 android:id="@+id/text_view_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/jetbrainsmono_regular"
                 android:text="JD:EW:34:DK:OE"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:textSize="12sp" />
         </ScrollView>
 
         <LinearLayout
-            android:gravity="center"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            >
-            <Button
-                android:id="@+id/button_turn_on_bluetooth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="开启蓝牙" />
-            <Button
-                android:id="@+id/button_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="刷新" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_turn_on_bluetooth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="开启蓝牙" />
+
+                <Button
+                    android:id="@+id/button_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="刷新" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_search_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="搜索设备" />
+
+                <Button
+                    android:id="@+id/button_search_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="取消搜索" />
+                <Button
+                    android:id="@+id/button_be_found"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="可被发现" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            >
-            <Button
-                android:id="@+id/button_search_device"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="搜索设备" />
-            <Button
-                android:id="@+id/button_search_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="取消搜索" />
-            <Button
-                android:id="@+id/button_be_found"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="可被发现" />
-
-        </LinearLayout>
-
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

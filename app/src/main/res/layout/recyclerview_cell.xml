@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:gravity="center"
@@ -11,12 +11,12 @@
         <TextView
             android:id="@+id/list_cell_bt_index"
             android:textAlignment="textEnd"
-            android:paddingRight="5dp"
+            android:paddingEnd="5dp"
             android:text="1."
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="13sp"
             android:fontFamily="@font/jetbrainsmono_bold"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/list_cell_bt_type"
             android:fontFamily="@font/jetbrainsmono_bold"
-            android:textSize="12dp"
+            android:textSize="13sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="低耗"
@@ -35,20 +35,20 @@
         <TextView
             android:id="@+id/list_cell_bt_mac"
             android:fontFamily="@font/jetbrainsmono_regular"
-            android:layout_marginLeft="5dp"
-            android:textSize="12dp"
+            android:layout_marginStart="5dp"
+            android:textSize="13sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="34:53:E3:12:23:45"
             android:textColor="@color/white" />
         <TextView
             android:id="@+id/list_cell_bt_name"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/jetbrainsmono_bold"
             android:text="BlackBerry Q10"
-            android:textSize="14dp"
+            android:textSize="13sp"
             android:textColor="@color/white" />
 
 

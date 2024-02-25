@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         // 蓝牙功能展示
         val bluetoothAbility = mutableListOf<String>()
         val bluetoothAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)
-        val bluetoothLEAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
+        val bluetoothLEAvailable =
+            packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)
         if (bluetoothAvailable) bluetoothAbility.add("BR/EDR")
         if (bluetoothLEAvailable) bluetoothAbility.add("LE")
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 添加按钮事件
      */
-    private fun addClickListenerToButtons(){
+    private fun addClickListenerToButtons() {
         // 蓝牙开启
         findViewById<Button>(R.id.button_turn_on_bluetooth)
             .setOnClickListener {
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             .setOnClickListener {
                 val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
                 mBluetoothManager.adapter.cancelDiscovery()
+                findViewById<TextView>(R.id.text_view_info).text = "已取消搜索操作"
                 Toast.makeText(applicationContext, "取消搜索操作", Toast.LENGTH_SHORT).show()
             }
     }
@@ -97,20 +99,37 @@ class MainActivity : AppCompatActivity() {
     /**
      * 获取蓝牙状态
      */
-    private fun getBluetoothState(){
+    private fun getBluetoothState() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
 
             var bluetoothState = ""
-            when(mBtAdapter.state){
-                BluetoothAdapter.STATE_ON -> { bluetoothState = "开启" }
-                BluetoothAdapter.STATE_OFF -> { bluetoothState = "关闭" }
-                BluetoothAdapter.STATE_CONNECTED -> { bluetoothState = "已连接" }
-                BluetoothAdapter.STATE_CONNECTING -> { bluetoothState = "连接中.." }
-                BluetoothAdapter.STATE_TURNING_OFF -> { bluetoothState = "关闭中.." }
-                BluetoothAdapter.STATE_TURNING_ON -> { bluetoothState = "开启中.." }
+            when (mBtAdapter.state) {
+                BluetoothAdapter.STATE_ON -> {
+                    bluetoothState = "开启"
+                }
+
+                BluetoothAdapter.STATE_OFF -> {
+                    bluetoothState = "关闭"
+                }
+
+                BluetoothAdapter.STATE_CONNECTED -> {
+                    bluetoothState = "已连接"
+                }
+
+                BluetoothAdapter.STATE_CONNECTING -> {
+                    bluetoothState = "连接中.."
+                }
+
+                BluetoothAdapter.STATE_TURNING_OFF -> {
+                    bluetoothState = "关闭中.."
+                }
+
+                BluetoothAdapter.STATE_TURNING_ON -> {
+                    bluetoothState = "开启中.."
+                }
             }
 
             findViewById<TextView>(R.id.textview_bluetooth_capable).text = "状态:$bluetoothState"
@@ -121,7 +140,7 @@ class MainActivity : AppCompatActivity() {
      * 开始发现设备
      */
 
-    private fun startSearchBluetoothDevice(){
+    private fun startSearchBluetoothDevice() {
         bluetoothDevices.clear()
         findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
         findViewById<TextView>(R.id.text_view_info).text = "" // 清空显示内容
@@ -135,13 +154,15 @@ class MainActivity : AppCompatActivity() {
             registerReceiver(receiver, filter)
 
             // 开始扫描
-            if (mBtAdapter.startDiscovery()){
+            if (mBtAdapter.startDiscovery()) {
+                findViewById<TextView>(R.id.text_view_info).text = "正在搜索附近蓝牙设备..."
                 Toast
                     .makeText(applicationContext, "开始发现设备", Toast.LENGTH_SHORT)
                     .show()
             }
         }
     }
+
     // Create a BroadcastReceiver for ACTION_FOUND.
     // 创建一个广播接收器： ACTION_FOUND
     private val receiver = object : BroadcastReceiver() {
@@ -172,8 +193,10 @@ class MainActivity : AppCompatActivity() {
             }
         startActivityForResult(discoverableIntent, requestCode)
 
+        findViewById<TextView>(R.id.text_view_info).text = "已设置为蓝牙可见"
+
         Toast
-            .makeText(applicationContext, "已开启可被发现", Toast.LENGTH_SHORT)
+            .makeText(applicationContext, "已设置为蓝牙可见", Toast.LENGTH_SHORT)
             .show()
     }
 
@@ -192,10 +215,11 @@ class MainActivity : AppCompatActivity() {
                 val REQUEST_ENABLE_BT = 1 // 请求码，将会在结果中返回请求码
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
                 textViewInfo.text = "蓝牙未开启，已请求开启"
-                object : CountDownTimer(3000,1000){
+                object : CountDownTimer(3000, 1000) {
                     override fun onTick(p0: Long) {
-                        textViewInfo.text = "${p0/1000}s 后刷新蓝牙列表"
+                        textViewInfo.text = "${p0 / 1000}s 后刷新蓝牙列表"
                     }
+
                     override fun onFinish() {
                         textViewInfo.text = "正在刷新蓝牙列表..."
                         refreshBluetoothDeviceList()
@@ -205,6 +229,7 @@ class MainActivity : AppCompatActivity() {
                 refreshBluetoothDeviceList()
             }
         }
+
         Toast
             .makeText(applicationContext, "已开启蓝牙", Toast.LENGTH_SHORT)
             .show()
@@ -225,9 +250,9 @@ class MainActivity : AppCompatActivity() {
         if (mBtAdapter != null) {
             // 取消蓝牙搜索操作
             mBtAdapter.cancelDiscovery() // 除 STATE_ON 之外的状态，操作该操作都会返回 false
-            if (mBtAdapter.isEnabled){
+            if (mBtAdapter.isEnabled) {
                 textViewDeviceCount.text = "数量:${mBtAdapter.bondedDevices.size}"
-                textViewInfo.text = "已配对设备为：\n${mBtAdapter.bondedDevices.joinToString(",\n")}"
+                textViewInfo.text = "已配对设备：${mBtAdapter.bondedDevices.joinToString(", ")}"
             }
         }
         Toast
@@ -236,23 +261,5 @@ class MainActivity : AppCompatActivity() {
 
         // 更新蓝牙状态
         getBluetoothState()
-    }
-
-    /**
-     * Utility functions
-     * 返回蓝牙设备的字符串信息
-     */
-    private fun getBluetoothDeviceStringInfo(device: BluetoothDevice): String{
-        val deviceName = device.name
-        val deviceHardwareAddress = device.address // MAC address
-        val deviceAlias = device.alias // MAC address
-        var deviceType = ""
-        when (device.type){
-            BluetoothDevice.DEVICE_TYPE_CLASSIC -> deviceType = "常规"
-            BluetoothDevice.DEVICE_TYPE_DUAL -> deviceType = "全段"
-            BluetoothDevice.DEVICE_TYPE_LE -> deviceType = "低耗"
-            BluetoothDevice.DEVICE_TYPE_UNKNOWN -> deviceType = "不明"
-        }
-        return "$deviceHardwareAddress $deviceType $deviceName"
     }
 }
