@@ -14,15 +14,27 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 
+class DeviceDemo (val name: String, val type: String, val address: String)
 
 class MainActivity : AppCompatActivity() {
 
+    private var bluetoothDevices = mutableListOf<DeviceDemo>()
     var deviceIndex = 1 // 发现设备的序号
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bluetooth_info_panel)
+
+        bluetoothDevices.add(DeviceDemo("bb 9800", "LE", "32:34:34:23:23"))
+        bluetoothDevices.add(DeviceDemo("bb 9900", "RN/LE", "32:34:34:23:23"))
+        bluetoothDevices.add(DeviceDemo("iPhone 15 Pro", "LE", "32:34:34:23:23"))
+
+        // recycleView
+        val recycleView = findViewById<RecyclerView>(R.id.recyclerview)
+        val adapter = BluetoothDeviceRecycleListAdapter(bluetoothDevices)
+        recycleView.setAdapter(adapter)
 
         // 蓝牙功能展示
         val bluetoothAbility = mutableListOf<String>()
@@ -118,25 +130,6 @@ class MainActivity : AppCompatActivity() {
      * 开始发现设备
      */
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    // 创建一个广播接收器： ACTION_FOUND
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
-            when (intent.action) {
-                BluetoothDevice.ACTION_FOUND -> {
-                    // Discovery has found a device. Get the BluetoothDevice
-                    // object and its info from the Intent.
-                    val device: BluetoothDevice =
-                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-
-                    textViewInfo.text = "${textViewInfo.text}${String.format("%2d.", deviceIndex)} ${getBluetoothDeviceStringInfo(device)}\n"
-                    deviceIndex++
-                }
-            }
-        }
-    }
-
     private fun startSearchBluetoothDevice(){
         deviceIndex = 1 // 初始化序号
 
@@ -157,7 +150,23 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
         }
-
+    }
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    // 创建一个广播接收器： ACTION_FOUND
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
+            when (intent.action) {
+                BluetoothDevice.ACTION_FOUND -> {
+                    // Discovery has found a device. Get the BluetoothDevice
+                    // object and its info from the Intent.
+                    val device: BluetoothDevice =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
+                    textViewInfo.text = "${textViewInfo.text}${String.format("%2d.", deviceIndex)} ${getBluetoothDeviceStringInfo(device)}\n"
+                    deviceIndex++
+                }
+            }
+        }
     }
 
     /**

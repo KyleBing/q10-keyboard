@@ -1,46 +1,49 @@
 package cn.kylebing.blackberry.q10_keyboard
 
-import android.bluetooth.BluetoothDevice
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class BluetoothDeviceRecycleListAdapter(private val dataSet: Array<BluetoothDevice>) :
+class BluetoothDeviceRecycleListAdapter(private val dataSet: MutableList<DeviceDemo>) :
     RecyclerView.Adapter<BluetoothDeviceRecycleListAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
+        val index: TextView
+        val deviceName: TextView
+        val deviceMac: TextView
+        val deviceType: TextView
 
         init {
-            // Define click listener for the ViewHolder's View
-            textView = view.findViewById(R.id.textView)
+            index = view.findViewById(R.id.list_cell_bt_index)
+            deviceName = view.findViewById(R.id.list_cell_bt_name)
+            deviceMac = view.findViewById(R.id.list_cell_bt_mac)
+            deviceType = view.findViewById(R.id.list_cell_bt_type)
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.bluetooth_cell, viewGroup, false)
+            .inflate(R.layout.recyclerview_cell, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.textView.text = dataSet[position].name
+        viewHolder.index.text = position.toString()
+        viewHolder.deviceName.text = dataSet.get(position).name
+        viewHolder.deviceMac.text = dataSet.get(position).address
+//        var deviceType = ""
+//        when (dataSet.get(position).type){
+//            BluetoothDevice.DEVICE_TYPE_CLASSIC -> deviceType = "常规"
+//            BluetoothDevice.DEVICE_TYPE_DUAL -> deviceType = "全段"
+//            BluetoothDevice.DEVICE_TYPE_LE -> deviceType = "低耗"
+//            BluetoothDevice.DEVICE_TYPE_UNKNOWN -> deviceType = "不明"
+//        }
+//        viewHolder.deviceType.text = deviceType
+        viewHolder.deviceType.text = dataSet.get(position).type
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }
