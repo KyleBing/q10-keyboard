@@ -75,11 +75,19 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/text_view_device_count"
+                android:id="@+id/text_view_device_paired"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="20dp"
-                android:text="数量:-"
+                android:text="配对:-"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/text_view_device_around"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:text="附近:-"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -129,15 +137,19 @@
                     android:id="@+id/button_turn_on_bluetooth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:layout_marginEnd="5dp"
-                    android:text="开启蓝牙" />
+                    android:text="开启 O" />
 
                 <Button
                     android:id="@+id/button_refresh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:layout_marginEnd="5dp"
-                    android:text="刷新" />
+                    android:text="刷新 R" />
 
             </LinearLayout>
             <LinearLayout
@@ -150,21 +162,27 @@
                     android:id="@+id/button_search_device"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:layout_marginEnd="5dp"
-                    android:text="搜索设备" />
+                    android:text="搜索设备 S" />
 
                 <Button
                     android:id="@+id/button_search_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="取消搜索" />
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="取消搜索 C" />
                 <Button
                     android:id="@+id/button_be_found"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="可被发现" />
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="可见 J" />
 
             </LinearLayout>
         </LinearLayout>

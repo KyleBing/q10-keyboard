@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
@@ -148,6 +149,8 @@ class MainActivity : AppCompatActivity() {
         bluetoothDevices.clear()
         findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
         findViewById<TextView>(R.id.text_view_info).text = "" // 清空显示内容
+        findViewById<TextView>(R.id.text_view_device_around).text = ""
+
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val mBtAdapter = mBluetoothManager.adapter
@@ -177,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
                     bluetoothDevices.add(device)
                     findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
+                    findViewById<TextView>(R.id.text_view_device_around).text = "附近:${bluetoothDevices.size}"
                 }
             }
         }
@@ -211,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
-        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_count)
+        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_paired)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             if (!mBtAdapter.isEnabled) {
@@ -249,18 +253,19 @@ class MainActivity : AppCompatActivity() {
         val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
         textViewInfo.text = "" // 初始的时候清空内容
 
-        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_count)
+        val textViewDeviceCount: TextView = findViewById<TextView>(R.id.text_view_device_paired)
         val mBtAdapter = mBluetoothManager.adapter
         if (mBtAdapter != null) {
             // 取消蓝牙搜索操作
             mBtAdapter.cancelDiscovery() // 除 STATE_ON 之外的状态，操作该操作都会返回 false
             if (mBtAdapter.isEnabled) {
                 textViewDeviceCount.text = "数量:${mBtAdapter.bondedDevices.size}"
+                findViewById<TextView>(R.id.text_view_device_around).text = "附近:${bluetoothDevices.size}"
                 textViewInfo.text = "已配对设备：${mBtAdapter.bondedDevices.joinToString(", ")}"
             }
         }
         Toast
-            .makeText(applicationContext, "已刷新", Toast.LENGTH_SHORT)
+            .makeText(applicationContext, "蓝牙状态已刷新", Toast.LENGTH_SHORT)
             .show()
 
         // 更新蓝牙状态
@@ -284,11 +289,15 @@ class MainActivity : AppCompatActivity() {
                 startSearchBluetoothDevice()
                 true
             }
+            KeyEvent.KEYCODE_S -> {
+                startSearchBluetoothDevice()
+                true
+            }
             KeyEvent.KEYCODE_C -> {
                 cancelBluetoothSearch()
                 true
             }
-            KeyEvent.KEYCODE_F -> {
+            KeyEvent.KEYCODE_J -> {
                 setBluetoothCanBeFound()
                 true
             }
