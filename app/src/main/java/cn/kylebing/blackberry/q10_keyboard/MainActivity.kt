@@ -16,20 +16,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class DeviceDemo (val name: String, val type: String, val address: String)
 
 class MainActivity : AppCompatActivity() {
-
-    private var bluetoothDevices = mutableListOf<DeviceDemo>()
-    var deviceIndex = 1 // 发现设备的序号
+    private var bluetoothDevices = mutableListOf<BluetoothDevice>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bluetooth_info_panel)
-
-        bluetoothDevices.add(DeviceDemo("bb 9800", "LE", "32:34:34:23:23"))
-        bluetoothDevices.add(DeviceDemo("bb 9900", "RN/LE", "32:34:34:23:23"))
-        bluetoothDevices.add(DeviceDemo("iPhone 15 Pro", "LE", "32:34:34:23:23"))
 
         // recycleView
         val recycleView = findViewById<RecyclerView>(R.id.recyclerview)
@@ -45,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.textview_bluetooth_status)
             .text = "蓝牙:${bluetoothAbility.joinToString("/")}"
-
 
         // 获取蓝牙状态
         getBluetoothState()
@@ -80,18 +72,18 @@ class MainActivity : AppCompatActivity() {
                 setBluetoothCanBeFound()
             }
 
-        // 蓝牙查找附近设备
+        // 蓝牙搜索附近设备
         findViewById<Button>(R.id.button_search_device)
             .setOnClickListener {
                 startSearchBluetoothDevice()
             }
 
-        // 蓝牙查找 - 取消
+        // 蓝牙搜索 - 取消
         findViewById<Button>(R.id.button_search_cancel)
             .setOnClickListener {
                 val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
                 mBluetoothManager.adapter.cancelDiscovery()
-                Toast.makeText(applicationContext, "取消查找操作", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "取消搜索操作", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -125,14 +117,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     /**
      * 开始发现设备
      */
 
     private fun startSearchBluetoothDevice(){
-        deviceIndex = 1 // 初始化序号
-
+        bluetoothDevices.clear()
+        findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
         findViewById<TextView>(R.id.text_view_info).text = "" // 清空显示内容
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
@@ -155,15 +146,12 @@ class MainActivity : AppCompatActivity() {
     // 创建一个广播接收器： ACTION_FOUND
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val textViewInfo: TextView = findViewById<TextView>(R.id.text_view_info)
             when (intent.action) {
                 BluetoothDevice.ACTION_FOUND -> {
-                    // Discovery has found a device. Get the BluetoothDevice
-                    // object and its info from the Intent.
                     val device: BluetoothDevice =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                    textViewInfo.text = "${textViewInfo.text}${String.format("%2d.", deviceIndex)} ${getBluetoothDeviceStringInfo(device)}\n"
-                    deviceIndex++
+                    bluetoothDevices.add(device)
+                    findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
                 }
             }
         }

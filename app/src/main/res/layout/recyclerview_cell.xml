@@ -2,61 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:gravity="left"
-    android:layout_height="50dp">
-    <LinearLayout
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/list_cell_bt_index"
-            android:textAlignment="textEnd"
-            android:layout_marginRight="10dp"
-            android:text="1."
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            android:fontFamily="@font/jetbrainsmono_bold"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    android:layout_height="wrap_content">
     <LinearLayout
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <LinearLayout
+        <TextView
+            android:id="@+id/list_cell_bt_index"
+            android:textAlignment="textEnd"
+            android:paddingRight="5dp"
+            android:text="1."
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="@font/jetbrainsmono_bold"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/list_cell_bt_type"
+            android:fontFamily="@font/jetbrainsmono_bold"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/list_cell_bt_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/jetbrainsmono_bold"
-                android:text="BlackBerry Q10"
-                android:textSize="14dp"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/list_cell_bt_type"
-                android:fontFamily="@font/jetbrainsmono_bold"
-                android:layout_marginLeft="10dp"
-                android:textSize="12dp"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="低功耗"
-                android:textColor="@color/btBlue" />
-        </LinearLayout>
-
+            android:text="低耗"
+            android:textColor="@color/btCyan" />
         <TextView
-            android:layout_gravity="left"
             android:id="@+id/list_cell_bt_mac"
+            android:fontFamily="@font/jetbrainsmono_regular"
+            android:layout_marginLeft="5dp"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="34:53:E3:12:23:45"
             android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/list_cell_bt_name"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jetbrainsmono_bold"
+            android:text="BlackBerry Q10"
+            android:textSize="14dp"
+            android:textColor="@color/white" />
+
+
     </LinearLayout>
 </LinearLayout>

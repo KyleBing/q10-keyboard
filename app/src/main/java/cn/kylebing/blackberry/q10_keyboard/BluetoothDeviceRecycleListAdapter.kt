@@ -1,12 +1,14 @@
 package cn.kylebing.blackberry.q10_keyboard
 
+import android.bluetooth.BluetoothDevice
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class BluetoothDeviceRecycleListAdapter(private val dataSet: MutableList<DeviceDemo>) :
+class BluetoothDeviceRecycleListAdapter(private val dataSet: MutableList<BluetoothDevice>) :
     RecyclerView.Adapter<BluetoothDeviceRecycleListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,18 +33,31 @@ class BluetoothDeviceRecycleListAdapter(private val dataSet: MutableList<DeviceD
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.index.text = position.toString()
+        viewHolder.index.text = (position + 1).toString()
         viewHolder.deviceName.text = dataSet.get(position).name
         viewHolder.deviceMac.text = dataSet.get(position).address
-//        var deviceType = ""
-//        when (dataSet.get(position).type){
-//            BluetoothDevice.DEVICE_TYPE_CLASSIC -> deviceType = "常规"
-//            BluetoothDevice.DEVICE_TYPE_DUAL -> deviceType = "全段"
-//            BluetoothDevice.DEVICE_TYPE_LE -> deviceType = "低耗"
-//            BluetoothDevice.DEVICE_TYPE_UNKNOWN -> deviceType = "不明"
-//        }
-//        viewHolder.deviceType.text = deviceType
-        viewHolder.deviceType.text = dataSet.get(position).type
+        var deviceType = ""
+        var color = ContextCompat.getColor(viewHolder.deviceName.context,R.color.btCyan)
+        when (dataSet.get(position).type){
+            BluetoothDevice.DEVICE_TYPE_CLASSIC -> {
+                deviceType = "常规"
+                color = ContextCompat.getColor(viewHolder.deviceName.context,R.color.btCyan)
+            }
+            BluetoothDevice.DEVICE_TYPE_DUAL -> {
+                deviceType = "全段"
+                color = ContextCompat.getColor(viewHolder.deviceName.context,R.color.btBlue)
+            }
+            BluetoothDevice.DEVICE_TYPE_LE -> {
+                deviceType = "低耗"
+                color = ContextCompat.getColor(viewHolder.deviceName.context,R.color.btGreen)
+            }
+            BluetoothDevice.DEVICE_TYPE_UNKNOWN -> {
+                deviceType = "不明"
+                color = ContextCompat.getColor(viewHolder.deviceName.context,R.color.btGreen)
+            }
+        }
+        viewHolder.deviceType.text = deviceType
+        viewHolder.deviceType.setTextColor(color)
     }
 
     override fun getItemCount() = dataSet.size

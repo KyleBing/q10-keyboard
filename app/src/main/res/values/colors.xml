@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gary">#888</color>
     <color name="btBlue">#0082FC</color>
+    <color name="btCyan">#03A9F4</color>
+    <color name="btInvalid">#888</color>
     <color name="btRed">#FF5722</color>
     <color name="btGreen">#4CAF50</color>
 </resources>
