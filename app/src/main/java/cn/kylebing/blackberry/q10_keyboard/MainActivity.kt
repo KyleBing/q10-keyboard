@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         bluetoothDevices.clear()
         findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
         findViewById<TextView>(R.id.text_view_info).text = "" // 清空显示内容
-        findViewById<TextView>(R.id.text_view_device_around).text = ""
+        findViewById<TextView>(R.id.text_view_device_around).text = "附近:-"
 
         // blue tooth
         val mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
