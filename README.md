@@ -1,9 +1,20 @@
 # BlackBerry Q10 蓝牙键盘应用
 
-> 边学习，边开发
+> 边学习，边开发  
 > 开发语言：Kotlin
 
-![image](https://github.com/KyleBing/q10-keyboard/assets/12215982/9c57e23f-3246-47e9-8f91-9d8eea512f0d)
+
+![image](https://github.com/KyleBing/q10-keyboard/assets/12215982/f19ac368-8d35-4c5c-85da-17ee051cd070)
+
+
+## 现状 & 目标
+
+我本意是想做一个可以将 Q10 变成一个蓝牙键盘的 app，让它可以随意连接其它设备进行控制。  
+不过不知道这个目标在技术上能不能实现。Q10 的安卓系统是 Android 4.3(api18)，所以只能在这个基础上进行开发。
+我之前没写过 Android 应用，也没用过 Kotlin，所以是现学现卖。
+
+目前做到搜索蓝牙设备这个阶段，但感觉这还挺有意思的。
+
 
 ## 键盘快捷键
 
