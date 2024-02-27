@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
@@ -24,12 +25,15 @@ class BluetoothDeviceRecycleListAdapter(private val dataSet: MutableList<Bluetoo
             deviceType = view.findViewById(R.id.list_cell_bt_type)
         }
     }
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.recyclerview_cell, viewGroup, false)
-
-        return ViewHolder(view)
+        val viewHolder = ViewHolder(view)
+        viewHolder.deviceMac.setOnClickListener{
+            Toast.makeText(it.context,"你点击了 ${viewHolder.deviceMac.text}", Toast.LENGTH_SHORT).show()
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {

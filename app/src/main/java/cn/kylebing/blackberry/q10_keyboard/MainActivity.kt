@@ -12,24 +12,25 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.KeyEvent
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
 
 class MainActivity : AppCompatActivity() {
     private var bluetoothDevices = mutableListOf<BluetoothDevice>()
+    private var isFilterUnknownDevice = false // 是否过滤没有名的设备
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bluetooth_info_panel)
 
-        // recycleView
-        val recycleView = findViewById<RecyclerView>(R.id.recyclerview)
+        // recyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         val adapter = BluetoothDeviceRecycleListAdapter(bluetoothDevices)
-        recycleView.setAdapter(adapter)
+        recyclerView.setAdapter(adapter)
 
         // 蓝牙功能展示
         val bluetoothAbility = mutableListOf<String>()
@@ -50,8 +51,21 @@ class MainActivity : AppCompatActivity() {
 
         // 添加按钮事件
         addClickListenerToButtons()
+
+        // 添加 checkbox 事件
+        addCheckboxEvent()
     }
 
+    /**
+     * Checkbox 事件
+     */
+    private fun addCheckboxEvent(){
+        findViewById<CheckBox>(R.id.checkbox_filter_device)
+            .setOnCheckedChangeListener { checkboxView, isChecked ->
+                findViewById<TextView>(R.id.text_view_info).text = isChecked.toString()
+                isFilterUnknownDevice = isChecked
+            }
+    }
 
     /**
      * 添加按钮事件
@@ -112,30 +126,12 @@ class MainActivity : AppCompatActivity() {
 
             var bluetoothState = ""
             when (mBtAdapter.state) {
-                BluetoothAdapter.STATE_ON -> {
-                    bluetoothState = "开启"
-                }
-
-                BluetoothAdapter.STATE_OFF -> {
-                    bluetoothState = "关闭"
-                }
-
-                BluetoothAdapter.STATE_CONNECTED -> {
-                    bluetoothState = "已连接"
-                }
-
-                BluetoothAdapter.STATE_CONNECTING -> {
-                    bluetoothState = "连接中.."
-                }
-
-                BluetoothAdapter.STATE_TURNING_OFF -> {
-                    bluetoothState = "关闭中.."
-                }
-
-                BluetoothAdapter.STATE_TURNING_ON -> {
-                    bluetoothState = "开启中.."
-                }
-            }
+                BluetoothAdapter.STATE_ON -> bluetoothState = "开启"
+                BluetoothAdapter.STATE_OFF -> bluetoothState = "关闭"
+                BluetoothAdapter.STATE_CONNECTED -> bluetoothState = "已连接"
+                BluetoothAdapter.STATE_CONNECTING -> bluetoothState = "连接中.."
+                BluetoothAdapter.STATE_TURNING_OFF -> bluetoothState = "关闭中.."
+                BluetoothAdapter.STATE_TURNING_ON -> bluetoothState = "开启中.." }
 
             findViewById<TextView>(R.id.textview_bluetooth_capable).text = "状态:$bluetoothState"
         }
@@ -178,7 +174,11 @@ class MainActivity : AppCompatActivity() {
                 BluetoothDevice.ACTION_FOUND -> {
                     val device: BluetoothDevice =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                    bluetoothDevices.add(device)
+                    if (isFilterUnknownDevice){
+                        if (device.name != null && device.name != "") bluetoothDevices.add(device)
+                    } else {
+                        bluetoothDevices.add(device)
+                    }
                     findViewById<RecyclerView>(R.id.recyclerview).adapter!!.notifyDataSetChanged()
                     findViewById<TextView>(R.id.text_view_device_around).text = "附近:${bluetoothDevices.size}"
                 }

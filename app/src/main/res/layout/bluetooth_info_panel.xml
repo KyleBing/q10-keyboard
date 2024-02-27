@@ -90,6 +90,13 @@
                 android:text="附近:-"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
+            <CheckBox
+                android:id="@+id/checkbox_filter_device"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="过滤"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
